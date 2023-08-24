@@ -64,21 +64,12 @@ export const Screen = (props: Props) => {
   const initTransitionToNextItem = useCallback(() => {
     setTimeout(() => {
       setItemsToRender(itemsToRender.slice(1));
-    }, animationDuration);
-    props.nextItemAction && props.nextItemAction();
-  }, [itemsToRender.join(', ')]);
-
-  // --- Here, we reset the values of the nodes that control the panning of the current item. This needs to happen in sync with the render update of itemsToRender.
-  const [cardsToRenderState, setCardsToRenderState] = useState<string>();
-  const joined = itemsToRender.join(', ');
-  if (cardsToRenderState !== joined) {
       switchingValue.value = 0;
       panTranslationValues.transY.value = 0;
       panInput.posY.value = 0;
-  }
-  useEffect(() => {
-      setCardsToRenderState(joined);
-  }, [joined]);
+    }, animationDuration);
+    props.nextItemAction && props.nextItemAction();
+  }, [itemsToRender.join(', ')]);
 
   const onPanEvent = useAnimatedGestureHandler({
     onStart: (event, ctx) => {
